@@ -55,6 +55,38 @@ def launch_setup(context, *args, **kwargs):
             f"Sensor configuration '{sensor_config}.yaml' not found in {competitor_pkg_share}/config/")
         exit()
 
+
+
+    ######################################################
+    
+    # State Logging
+    with open(trial_config_path, "r") as stream:
+        try:
+            config = yaml.safe_load(stream)
+        except yaml.YAMLError:
+            print("Unable to read configuration file")
+            config = None
+
+    gazebo_state_logging = 'false'
+    if config is not None:
+        try:
+            gazebo_state_logging = config["gazebo_state_logging"]
+            if not gazebo_state_logging:
+                pass
+        except KeyError:
+            pass
+    
+    gazebo_log_path = None
+    if gazebo_state_logging:
+        # Create the folder ~/.ariac/log/gazebo if it does not exist
+        if not os.path.exists(os.path.join(os.path.expanduser('~'), '.ariac', 'log', 'gazebo')):
+            os.makedirs(os.path.join(os.path.expanduser('~'), '.ariac', 'log', 'gazebo'))
+        gazebo_log_path = os.path.join(os.path.expanduser('~'), '.ariac', 'log', 'gazebo')
+    
+    extra_gazebo_args = ''
+    if gazebo_log_path is not None:
+        extra_gazebo_args = f'-r --record_period 0.01 --record_path={gazebo_log_path}'
+            
     # Gazebo node
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -62,7 +94,8 @@ def launch_setup(context, *args, **kwargs):
         ),
         launch_arguments={
             'world': world_path,
-        }.items()
+            'extra_gazebo_args': extra_gazebo_args,
+            }.items()
     )
 
     # Sensor TF
