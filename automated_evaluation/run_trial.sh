@@ -22,6 +22,7 @@ if [ ! -d /tmp/.ariac2023/logs/$teamName ]; then
 fi
 
 
+
 if [[ $2 ]] ; then
     echo "==== Running trial: $2"
     docker exec -it $teamName bash -c ". /home/ubuntu/scripts/run_trial.sh $1 $2"
@@ -38,6 +39,11 @@ if [[ ! $2 ]] ; then
         trial_file="${entry##*/}"
         # e.g., kitting
         trial_name=${trial_file::-5}
+
+        # Create a local folder to copy state.log from the container
+        # The team name and the trial name are used to create subfolders
+        echo "==== Creating ~/.ariac/log/gazebo/$teamName/$trial_name"
+        mkdir -p ~/.ariac/log/gazebo/$teamName/$trial_name;
 
         docker exec -it $teamName bash -c ". /home/ubuntu/scripts/run_trial.sh $1 $trial_name"
         echo "==== Copying logs to /tmp/.ariac2023/logs/$teamName"

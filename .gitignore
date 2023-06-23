@@ -54,4 +54,5 @@ log/
 /ariac_human/agent/java_rosbridge.msgs
 
 /automated_evaluation/nist_team.yaml
-
+/automated_evaluation/reaper
+reaper.yaml

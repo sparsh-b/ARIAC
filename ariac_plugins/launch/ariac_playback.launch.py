@@ -10,8 +10,6 @@ from launch.substitutions import LaunchConfiguration
 from launch.conditions import IfCondition
 
 # This function is needed.
-
-
 def generate_launch_description():
     '''
     Function which generates the launch description for the ariac_playback.launch.py file.
@@ -22,6 +20,18 @@ def generate_launch_description():
         'no_gui',
         default_value='True',
         description='Launch Gazebo without GUI'
+    )
+    
+    team_name = DeclareLaunchArgument(
+        'team_name',
+        default_value='',
+        description='Team name'
+    )
+    
+    trial_name = DeclareLaunchArgument(
+        'trial_name',
+        default_value='',
+        description='Trial name'
     )
 
     log_file_path = os.getenv('HOME') + '/.ariac/log/gazebo/state.log'
