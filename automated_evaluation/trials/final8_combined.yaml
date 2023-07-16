@@ -1,0 +1,134 @@
+# Trial Name: final8_combined.yaml
+# ARIAC2023
+# 2023-06-20 10:15:44
+
+# ENVIRONMENT SETUP
+time_limit: 600 # options: -1 (no time limit) or number of seconds
+gazebo_state_logging: true
+
+kitting_trays: # Which kitting trays will be spawned
+  tray_ids: [0,1]
+  slots: [1,2]
+
+parts:
+  conveyor_belt: #population params for conveyor belt
+    active: true
+    spawn_rate: 15 # seconds between spawn
+    order: 'random' # random or sequential
+    parts_to_spawn:
+      - type: 'pump'
+        color: 'green'
+        number: 3
+        offset: 0.15 # between -1 and 1
+      - type: 'battery'
+        color: 'green'
+        number: 3
+        offset: -0.15 # between -1 and 1
+      - type: 'sensor'
+        color: 'green'
+        number: 3
+        offset: 0.0 # between -1 and 1
+      - type: 'sensor'
+        color: 'green'
+        number: 3
+        offset: -0.30 # between -1 and 1
+      - type: 'regulator'
+        color: 'green'
+        number: 3
+        offset: 0.30 # between -1 and 1
+  bins: # bin params - 8 total bins each bin has nine total slots (1-9)
+    bin1:
+      - type: 'pump'
+        color: 'orange'
+        slots: [1,7]
+    bin2:
+      - type: 'battery'
+        color: 'orange'
+        slots: [2,8]
+    bin6:
+      - type: 'sensor'
+        color: 'orange'
+        slots: [3,9]
+    bin8:
+      - type: 'regulator'
+        color: 'orange'
+        slots: [4,6]
+
+
+# ORDER SETUP
+orders:
+  - id: 'FINAL8COMBINED1'
+    type: 'combined'
+    announcement:
+      time_condition: 0.0
+    priority: false
+    combined_task:
+      station: 'as2'
+      products:
+        - type: 'pump'
+          color: 'green'
+          assembled_pose: # relative to briefcase frame
+            xyz: [0.14, 0.0, 0.02]
+            rpy: [0, 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'battery'
+          color: 'green'
+          assembled_pose: # relative to briefcase frame
+            xyz: [-0.15, 0.035, 0.043]
+            rpy: [0, 0, 'pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'sensor'
+          color: 'green'
+          assembled_pose: # relative to briefcase frame
+            xyz: [-0.1, 0.395, 0.045]
+            rpy: [0, 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'regulator'
+          color: 'green'
+          assembled_pose: # relative to briefcase frame
+            xyz: [0.175, -0.223, 0.215]
+            rpy: ['pi/2', 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+  - id: 'FINAL8COMBINED2'
+    type: 'combined'
+    announcement:
+      submission_condition:
+        order_id: 'FINAL8COMBINED1'
+    priority: false
+    combined_task:
+      station: 'as4'
+      products:
+        - type: 'pump'
+          color: 'orange'
+          assembled_pose: # relative to briefcase frame
+            xyz: [0.14, 0.0, 0.02]
+            rpy: [0, 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'battery'
+          color: 'orange'
+          assembled_pose: # relative to briefcase frame
+            xyz: [-0.15, 0.035, 0.043]
+            rpy: [0, 0, 'pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'sensor'
+          color: 'orange'
+          assembled_pose: # relative to briefcase frame
+            xyz: [-0.1, 0.395, 0.045]
+            rpy: [0, 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'regulator'
+          color: 'orange'
+          assembled_pose: # relative to briefcase frame
+            xyz: [0.175, -0.223, 0.215]
+            rpy: ['pi/2', 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+
+# GLOBAL CHALLENGES
+challenges:
+  - robot_malfunction:
+      duration: 50.0
+      robots_to_disable: ['floor_robot']
+      part_place_condition:
+        type: 'battery'
+        color: 'green'
+        agv: 1

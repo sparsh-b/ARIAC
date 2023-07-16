@@ -56,3 +56,5 @@ log/
 /automated_evaluation/nist_team.yaml
 /automated_evaluation/reaper
 reaper.yaml
+uta.yaml
+runaround_robotics.yaml

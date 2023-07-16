@@ -1,0 +1,82 @@
+# Trial Name: final5_kitting.yaml
+# ARIAC2023
+# 2023-06-20 09:34:08
+
+# ENVIRONMENT SETUP
+time_limit: 600 # options: -1 (no time limit) or number of seconds
+gazebo_state_logging: true
+
+kitting_trays: # Which kitting trays will be spawned
+  tray_ids: [0,9]
+  slots: [4,6]
+
+parts:
+  bins: # bin params - 8 total bins each bin has nine total slots (1-9)
+    bin1:
+      - type: 'sensor'
+        color: 'orange'
+        slots: [4,5,6]
+      - type: 'pump'
+        color: 'orange'
+        slots: [7,8,9]
+
+  conveyor_belt: #population params for conveyor belt
+    active: true
+    spawn_rate: 20 # seconds between spawn
+    order: 'random' # random or sequential
+    parts_to_spawn:
+      - type: 'battery'
+        color: 'orange'
+        number: 5
+        offset: 0 # between -1 and 1
+
+# ORDER SETUP
+orders:
+  - id: 'FINAL5KITTING1'
+    type: 'kitting'
+    announcement:
+      time_condition: 0.0
+    priority: false
+    kitting_task:
+      agv_number: 2
+      tray_id: 0
+      destination: 'warehouse'
+      products:
+        - type: 'pump'
+          color: 'orange'
+          quadrant: 1
+        - type: 'battery'
+          color: 'orange'
+          quadrant: 2
+        - type: 'battery'
+          color: 'orange'
+          quadrant: 3
+  - id: 'FINAL5KITTING2'
+    type: 'kitting'
+    announcement:
+      time_condition: 10.0
+    priority: true
+    kitting_task:
+      agv_number: 4
+      tray_id: 9
+      destination: 'warehouse'
+      products:
+        - type: 'pump'
+          color: 'orange'
+          quadrant: 1
+        - type: 'sensor'
+          color: 'orange'
+          quadrant: 2
+        - type: 'sensor'
+          color: 'orange'
+          quadrant: 3
+
+# GLOBAL CHALLENGES
+challenges:
+  - robot_malfunction:
+      duration: 100.0
+      robots_to_disable: ['floor_robot']
+      part_place_condition:
+        type: 'pump'
+        color: 'orange'
+        agv: 2
