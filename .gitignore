@@ -58,3 +58,4 @@ log/
 reaper.yaml
 uta.yaml
 runaround_robotics.yaml
+pre-build.sh
