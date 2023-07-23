@@ -11,9 +11,7 @@ RUN . /opt/ros/galactic/local_setup.sh && \
     cd ~/ariac_ws && \
     rosdep update --include-eol-distros && \
     rosdep install --from-paths src -y -i --rosdistro galactic && \
+    colcon build --parallel-workers 1 && \
     apt install openjdk-17-jdk -y && \
-    apt install ros-galactic-nav2-simple-commander -y && \
-    colcon build --packages-select ariac_msgs && \
-    colcon build --parallel-workers 3
 
 ENV INSIDE_DOCKER ok

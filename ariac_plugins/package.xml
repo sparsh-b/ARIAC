@@ -18,7 +18,6 @@
   <depend>tf2_ros</depend>
   <depend>tf2</depend>
   <depend>orocos_kdl</depend>
-  <depend>gazebo_rendering</depend>
 
   <build_depend>gazebo_dev</build_depend>
   <build_depend>gazebo_msgs</build_depend>
