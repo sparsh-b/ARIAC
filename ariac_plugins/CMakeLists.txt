@@ -22,6 +22,17 @@ find_package(orocos_kdl REQUIRED)
 
 link_directories(${gazebo_dev_LIBRARY_DIRS})
 
+
+# Disable Shadows Plugin
+add_library(disable_shadows_plugin SHARED
+  src/disable_shadows_plugin.cpp
+)
+target_include_directories(disable_shadows_plugin PUBLIC include)
+ament_target_dependencies(disable_shadows_plugin
+  "gazebo_ros"
+)
+ament_export_libraries(disable_shadows_plugin)
+
 # Vacuum Gripper
 add_library(VacuumGripperPlugin SHARED
   src/vacuum_gripper_plugin.cpp
@@ -87,15 +98,7 @@ ament_target_dependencies(GripperColorPlugin
 )
 ament_export_libraries(GripperColorPlugin)
 
-# Disable Shadows Plugin
-add_library(disable_shadows_plugin SHARED
-  src/disable_shadows_plugin.cpp
-)
-target_include_directories(disable_shadows_plugin PUBLIC include)
-ament_target_dependencies(disable_shadows_plugin
-  "gazebo_ros"
-)
-ament_export_libraries(disable_shadows_plugin)
+
 
 # Object Disposal Plugin
 add_library(ObjectDisposalPlugin SHARED
