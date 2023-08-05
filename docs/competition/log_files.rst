@@ -11,7 +11,7 @@ Trial runs are logged to files located in :file:`~/.ariac2023/log/gazebo` and :f
     .. admonition:: Generating state.log 
         :class: attention
 
-        :file:`state.log` is only generated if the following entry is added to the trial file:
+        :file:`state.log` is only generated if the following entry is present in the trial file:
 
         .. code-block:: yaml
 
@@ -67,3 +67,27 @@ Trial runs are logged to files located in :file:`~/.ariac2023/log/gazebo` and :f
 
 Playing Back Gazebo State
 -------------------------
+
+To play back a specific :file:`state.log`, you will need to start  :file:`ariac_playback.launch.py` which is located in the folder :file:`ariac_plugins`, so make sure you have ARIAC installed and sourced.
+
+:file:`ariac_playback.launch.py` will try to look for robot meshes and textures on the host machine the same way the robot model is fetched in the docker container, that is, in :file:`/home/ubuntu/ariac_ws/`. Since this path does not exist on the host, the launch file will crash. To solve this issue you can either create the path :file:`/home/ubuntu/ariac_ws/` on the host machine or you can create a symbolic link to the path where the robot meshes and textures are located on the host machine. 
+
+    - Creating the path :file:`/home/ubuntu/ariac_ws/` on the host machine. If the robot meshes and textures are located in :file:`/home/john/my_ws/` on the host machine:
+
+        .. code-block:: console
+
+            sudo mkdir -p /home/ubuntu
+            sudo cp -r /home/john/my_ws /home/ubuntu/ariac_ws
+
+    - Creating a symbolic link to the path where the robot meshes and textures are located on the host machine.
+    
+            .. code-block:: console
+    
+                ln -s /home/john/my_ws /home/ubuntu/ariac_ws
+
+Once you have created the path :file:`/home/ubuntu/ariac_ws/` on the host machine or created a symbolic link to the path where the robot meshes and textures are located on the host machine, you can start :file:`ariac_playback.launch.py`:
+
+.. code-block:: console
+    :caption: Starting ariac_playback.launch.py
+
+    ros2 launch ariac_plugins ariac_playback.launch.py team_name:=nist_team trial_name:=final_kitting log_file:=state
