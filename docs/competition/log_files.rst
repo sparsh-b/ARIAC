@@ -70,7 +70,7 @@ Playing Back Gazebo State
 
 To play back a specific :file:`state.log`, you will need to start  :file:`ariac_playback.launch.py` which is located in the folder :file:`ariac_plugins`, so make sure you have ARIAC installed and sourced.
 
-:file:`ariac_playback.launch.py` will try to look for robot meshes and textures on the host machine the same way the robot model is fetched in the docker container, that is, in :file:`/home/ubuntu/ariac_ws/`. Since this path does not exist on the host, the launch file will crash. To solve this issue you can either create the path :file:`/home/ubuntu/ariac_ws/` on the host machine or you can create a symbolic link to the path where the robot meshes and textures are located on the host machine. 
+:file:`ariac_playback.launch.py` will try to look for robot meshes and textures on the host machine the same way the robot model is fetched in the docker container, that is, in :file:`/home/ubuntu/ariac_ws/`. Since this path does not exist on the host, the launch file will crash. To solve this issue you can either create the path :file:`/home/ubuntu/ariac_ws/` on the host machine or you can create a symbolic link to the path where the robot meshes and textures are located on the host machine. **Use one of the following methods**:
 
     - Creating the folder :file:`/home/ubuntu/ariac_ws/` on the host machine. If ARIAC is installed in :file:`/home/john/my_ws/` on the host machine:
 
