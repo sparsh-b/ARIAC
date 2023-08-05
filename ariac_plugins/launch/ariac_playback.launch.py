@@ -11,15 +11,9 @@ from launch.conditions import IfCondition
 
 
 def launch_setup(context, *args, **kwargs):
-    team_name = LaunchConfiguration('team_name').perform(context)
     trial_name = LaunchConfiguration('trial_name').perform(context)
-    log_file = LaunchConfiguration('log_file').perform(context)
     
-    if not team_name:
-        log_file_path = os.getenv('HOME') + '/.ariac/log/gazebo/state.log'
-    else:
-        log_file_path = os.getenv(
-            'HOME') + '/.ariac/log/gazebo/' + team_name + '/' + trial_name + '/' + log_file + '.log'
+    log_file_path = os.getenv('HOME') + '/.ariac2023/log/gazebo/' +  trial_name + '/' + 'state.log'
 
     ariac_plugins_dir = get_package_share_directory('ariac_plugins')
 
@@ -51,12 +45,6 @@ def generate_launch_description():
         'no_gui',
         default_value='True',
         description='Launch Gazebo without GUI'
-    ))
-
-    declared_arguments.append(DeclareLaunchArgument(
-        'team_name',
-        default_value='',
-        description='Team name'
     ))
     
     declared_arguments.append(DeclareLaunchArgument(

@@ -85,9 +85,11 @@ To play back a specific :file:`state.log`, you will need to start  :file:`ariac_
     
                 ln -s /home/john/my_ws /home/ubuntu/ariac_ws
 
-Once you have created the path :file:`/home/ubuntu/ariac_ws/` on the host machine or created a symbolic link to the path where the robot meshes and textures are located on the host machine, you can start :file:`ariac_playback.launch.py`:
+Once you have created the path :file:`/home/ubuntu/ariac_ws/` on the host machine or created a symbolic link to the path where the robot meshes and textures are located on the host machine, you can start :file:`ariac_playback.launch.py` with the following command:
 
 .. code-block:: console
     :caption: Starting ariac_playback.launch.py
 
-    ros2 launch ariac_plugins ariac_playback.launch.py team_name:=nist_team trial_name:=final_kitting log_file:=state
+    ros2 launch ariac_plugins ariac_playback.launch.py trial_name:=<trial_name>
+
+where :code:`<trial_name>` is the name of the trial file without the `.yaml` extension. The launch file will look for the :file:`state.log` file in :file:`~/.ariac2023/log/gazebo/<trial_name>/state.log` and play it back. The playback can be paused and resumed by pressing the space bar. The playback can be sped up by pressing the right arrow key and slowed down by pressing the left arrow key. The playback can be reset by pressing the backspace key. The playback can be exited by pressing the escape key.
