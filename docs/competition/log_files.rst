@@ -55,6 +55,6 @@ Trial runs are logged to files located in :file:`~/.ariac2023/log/gazebo` and :f
     Completion time: 86.836000
     Score: 11
 
-============================
+
 Playing Back Gazebo State
-============================
+-------------------------
