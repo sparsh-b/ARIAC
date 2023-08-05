@@ -93,4 +93,4 @@ Once you have created the folder :file:`/home/ubuntu/ariac_ws/` or a symbolic li
 
     ros2 launch ariac_plugins ariac_playback.launch.py trial_name:=<trial_name>
 
-where :code:`<trial_name>` is the name of the trial file without the `.yaml` extension. The launch file will look for the :file:`state.log` file in :file:`~/.ariac2023/log/gazebo/<trial_name>/state.log` and play it back. The playback can be paused and resumed by pressing the space bar. The playback starts in the pause state. Press the play button to start the playback.
+where :code:`<trial_name>` is the name of the trial file without the `.yaml` extension. The launch file will look for the :file:`state.log` file in :file:`~/.ariac2023/log/gazebo/<trial_name>/state.log` and play it back. The playback can be paused and resumed by pressing the space bar.
