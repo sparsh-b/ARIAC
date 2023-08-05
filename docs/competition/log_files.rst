@@ -79,10 +79,10 @@ To play back a specific :file:`state.log`, you will need to start  :file:`ariac_
             sudo mkdir -p /home/ubuntu
             sudo cp -r /home/john/my_ws /home/ubuntu/ariac_ws
 
-    - Creating a symbolic link to the path where the robot meshes and textures are located on the host machine.
+    - Creating a symbolic link to your current ARIAC installation.
     
         .. code-block:: console
-            
+
             sudo mkdir -p /home/ubuntu
             ln -s /home/john/my_ws /home/ubuntu/ariac_ws
 
