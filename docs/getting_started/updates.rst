@@ -1,6 +1,14 @@
 Updates
 ========
 
+Release 2023_v1.6, Aug 5
+-------------------------
+
+- Added the trials used in the finals. They can be found in the `ariac_gazebo/config`
+- Scoring and Gazebo log files are now saved in the `~/.ariac2023` folder. See the :ref:`Log Files <TRIAL_LOGS>` section for more information.
+- Added the code to play back the finals trials. See the :ref:`Log Files <TRIAL_LOGS>` section for more information.
+
+
 Release 2023_v1.5, May 19
 -------------------------
 
