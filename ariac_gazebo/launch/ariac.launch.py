@@ -54,6 +54,45 @@ def launch_setup(context, *args, **kwargs):
         rclpy.logging.get_logger('Launch File').fatal(
             f"Sensor configuration '{sensor_config}.yaml' not found in {competitor_pkg_share}/config/")
         exit()
+    
+    ######## START: scoring file ########
+    log_folder = os.path.join(os.path.expanduser('~'), '.ariac2023', 'log', 'scoring', trial_name)
+    if not os.path.exists(log_folder):
+        os.makedirs(log_folder)
+        
+    # create a file in the scoring log folder
+    scoring_file_path = os.path.join(log_folder, 'scoring.log')
+    with open(scoring_file_path, 'w') as scoring_file:
+        scoring_file.write(f'===== {trial_name}.yaml =====\n')
+        scoring_file.close()
+    
+    ######## END: scoring file ########
+    
+    ######## START: state Logging ########
+    with open(trial_config_path, "r") as stream:
+        try:
+            config = yaml.safe_load(stream)
+        except yaml.YAMLError:
+            print("Unable to read configuration file")
+            config = None
+
+    gazebo_state_logging = 'false'
+    if config is not None:
+        try:
+            gazebo_state_logging = config["gazebo_state_logging"]
+            if not gazebo_state_logging:
+                pass
+        except KeyError:
+            pass
+
+    extra_gazebo_args = ''
+    if gazebo_state_logging:
+        log_folder = os.path.join(os.path.expanduser('~'), '.ariac2023', 'log', 'gazebo', trial_name)
+        # Create the folder ~/.ariac_2023/log/gazebo/<trial_name> if it does not exist
+        if not os.path.exists(log_folder):
+            os.makedirs(log_folder)
+        extra_gazebo_args = f'-r --record_period 0.01 --record_path={log_folder}'
+    ######## END: state Logging ########
 
     # Gazebo node
     gazebo = IncludeLaunchDescription(
@@ -62,6 +101,7 @@ def launch_setup(context, *args, **kwargs):
         ),
         launch_arguments={
             'world': world_path,
+            'extra_gazebo_args': extra_gazebo_args
         }.items()
     )
 
