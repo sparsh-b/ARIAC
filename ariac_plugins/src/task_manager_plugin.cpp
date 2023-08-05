@@ -52,6 +52,7 @@ Distributions of NIST software should also include copyright and licensing state
 #include <memory>
 #include <iostream>
 #include <cstdlib>
+#include <stdlib.h>
 // ARIAC
 #include <ariac_plugins/ariac_common.hpp>
 
@@ -333,20 +334,10 @@ namespace ariac_plugins
 
     void TaskManagerPluginPrivate::WriteToLog()
     {
-        // Get the environment variable INSIDE_DOCKER
-        auto inside_docker = std::getenv("INSIDE_DOCKER");
-
-        // compare inside_docker to "ok"
-        if (inside_docker == NULL)
-        {
-            // RCLCPP_WARN_STREAM_ONCE(ros_node_->get_logger(), "INSIDE_DOCKER environment variable not set");
-            return;
-        }
-
         // Create a folder
-        std::string folder_path = "/home/ubuntu/logs/";
-        std::string command = "mkdir -p " + folder_path;
-        system(command.c_str());
+
+        // std::string command = "mkdir -p " + folder_path;
+        // system(command.c_str());
 
         // remove .yaml from trial name
         if (trial_name_.length() > 5)
@@ -354,17 +345,19 @@ namespace ariac_plugins
             trial_name_.erase(trial_name_.length() - 5);
         }
 
-        // Create a file name with the trial name
-        std::string file_name = trial_name_ + ".txt";
-        auto log_file_path = folder_path + file_name;
+        auto home = getenv("HOME");
 
-        // Open the log file
-        RCLCPP_WARN_STREAM_ONCE(ros_node_->get_logger(), "Generating log file: " << log_file_path);
-        auto log_file = std::ofstream(log_file_path);
+        // convert home to std::string
+        std::string home_str(home);
+
+        std::string scoring_file = home_str + "/.ariac2023/log/scoring/" + trial_name_ + "/scoring.log";
+        RCLCPP_INFO_STREAM_ONCE(ros_node_->get_logger(), "-------------- Writing to log file: " << scoring_file);
+        
+        auto scoring_file_stream = std::ofstream(scoring_file);
         // Write to log file
-        log_file << log_message_;
+        scoring_file_stream << log_message_;
         // Close the log file
-        log_file.close();
+        scoring_file_stream.close();
     }
 
     //==============================================================================
