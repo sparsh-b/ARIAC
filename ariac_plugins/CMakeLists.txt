@@ -143,12 +143,29 @@ ament_target_dependencies(TaskManagerPlugin
 )
 ament_export_libraries(TaskManagerPlugin)
 
+# Log Playback Plugin
+add_library(LogPlaybackPlugin SHARED
+  src/log_playback_plugin.cpp
+)
+target_include_directories(LogPlaybackPlugin PUBLIC include)
+ament_target_dependencies(LogPlaybackPlugin
+  "gazebo_ros"
+)
+ament_export_libraries(LogPlaybackPlugin)
+
 ament_package()
 
 install(DIRECTORY include/
         DESTINATION include)
 
+# Install extra folders
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 install(TARGETS
+    LogPlaybackPlugin
     VacuumGripperPlugin
     conveyor_belt_plugin
     agv_plugin
