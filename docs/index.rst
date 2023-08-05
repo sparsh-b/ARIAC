@@ -37,6 +37,7 @@ Github repository: `https://www.github.com/usnistgov/ARIAC/ <https://www.github.
    competition/challenges
    competition/tf_frames
    competition/scoring
+   competition/log_files
 
 .. toctree::
    :caption: ⏩ Tutorials
@@ -60,4 +61,5 @@ Github repository: `https://www.github.com/usnistgov/ARIAC/ <https://www.github.
 
    automated_evaluation/automated_evaluation_overview
    automated_evaluation/competition_launch
+   
  

@@ -1,4 +1,4 @@
-# Automated Evaluation 
+# Setting up and Testing 
 
 ## Overview
 

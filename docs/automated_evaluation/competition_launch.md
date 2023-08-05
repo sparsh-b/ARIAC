@@ -1,4 +1,4 @@
-# Launch File Setup
+# Setting up the Competition Launch File
 
 In order to properly evaluate competitors code, competitors will need to create a single ROS2 launch file that starts the competition, MoveIT if needed, and any competitor nodes. An example is shown below: 
 
