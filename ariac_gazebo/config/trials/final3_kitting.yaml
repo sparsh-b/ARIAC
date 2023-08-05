@@ -1,0 +1,94 @@
+# Trial Name: final3_kitting.yaml
+# ARIAC2023
+# 2023-06-20 09:19:53
+
+# ENVIRONMENT SETUP
+time_limit: 600 # options: -1 (no time limit) or number of seconds
+gazebo_state_logging: true
+
+kitting_trays: # Which kitting trays will be spawned
+  tray_ids: [3,4]
+  slots: [3,4]
+
+parts:
+  bins: # bin params - 8 total bins each bin has nine total slots (1-9)
+    bin2:
+      - type: 'battery'
+        color: 'blue'
+        slots: [2,3,4]
+    bin6:
+      - type: 'regulator'
+        color: 'blue'
+        slots: [5,6,7]
+    bin8:
+      - type: 'sensor'
+        color: 'orange'
+        slots: [1,3]
+
+  # conveyor_belt: #population params for conveyor belt
+  #   active: true
+  #   spawn_rate: 20 # seconds between spawn
+  #   order: 'sequential' # random or sequential
+  #   parts_to_spawn:
+  #     - type: 'sensor'
+  #       color: 'orange'
+  #       number: 3
+  #       offset: 0 # between -1 and 1
+
+# ORDER SETUP
+orders:
+  - id: 'FINAL3KITTING1'
+    type: 'kitting'
+    announcement:
+      time_condition: 0.0
+    priority: false
+    kitting_task:
+      agv_number: 1
+      tray_id: 3
+      destination: 'warehouse'
+      products:
+        - type: 'battery'
+          color: 'blue'
+          quadrant: 1
+        - type: 'regulator'
+          color: 'blue'
+          quadrant: 2
+        - type: 'sensor'
+          color: 'orange'
+          quadrant: 3
+        - type: 'sensor'
+          color: 'orange'
+          quadrant: 4
+  - id: 'FINAL3KITTING2'
+    type: 'kitting'
+    announcement:
+      submission_condition:
+        order_id: 'FINAL3KITTING1'
+    priority: false
+    kitting_task:
+      agv_number: 4
+      tray_id: 4
+      destination: 'warehouse'
+      products:
+        - type: 'battery'
+          color: 'blue'
+          quadrant: 1
+        - type: 'battery'
+          color: 'blue'
+          quadrant: 2
+        - type: 'regulator'
+          color: 'blue'
+          quadrant: 3
+        - type: 'regulator'
+          color: 'blue'
+          quadrant: 4
+
+# GLOBAL CHALLENGES
+challenges:
+  - sensor_blackout:
+      duration: 150.0
+      sensors_to_disable: ['break_beam', 'proximity', 'laser_profiler', 'lidar', 'camera', 'logical_camera']
+      part_place_condition:
+        type: 'battery'
+        color: 'blue'
+        agv: 4

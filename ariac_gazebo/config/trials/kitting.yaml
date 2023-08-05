@@ -4,6 +4,7 @@
 # ENVIRONMENT SETUP
 
 time_limit: -1 # options: -1 (no time limit) or number of seconds (max 500)
+gazebo_state_logging: true
 
 kitting_trays: # Which kitting trays will be spawn
   tray_ids: [3, 8] 

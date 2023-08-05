@@ -1,0 +1,76 @@
+# Trial Name: final7_combined.yaml
+# ARIAC2023
+# 2023-06-20 10:10:42
+
+# ENVIRONMENT SETUP
+time_limit: 600 # options: -1 (no time limit) or number of seconds
+gazebo_state_logging: true
+
+kitting_trays: # Which kitting trays will be spawned
+  tray_ids: [0]
+  slots: [1]
+
+parts:
+  bins: # bin params - 8 total bins each bin has nine total slots (1-9)
+    bin2:
+      - type: 'pump'
+        color: 'red'
+        slots: [5]
+    bin3:
+      - type: 'sensor'
+        color: 'red'
+        slots: [5]
+    bin4:
+      - type: 'regulator'
+        color: 'red'
+        slots: [5]
+    bin5:
+      - type: 'battery'
+        color: 'red'
+        slots: [5]
+        flipped: true
+
+  # conveyor_belt: #population params for conveyor belt
+  #   active: true
+  #   spawn_rate: 25 # seconds between spawn
+  #   order: 'random' # random or sequential
+  #   parts_to_spawn:
+  #     - type: 'battery'
+  #       color: 'red'
+  #       number: 4
+  #       offset: 0 # between -1 and 1
+
+# ORDER SETUP
+orders:
+  - id: 'FINAL7COMBINED'
+    type: 'combined'
+    announcement:
+      time_condition: 0.0
+    priority: false
+    combined_task:
+      station: 'as1'
+      products:
+        - type: 'pump'
+          color: 'red'
+          assembled_pose: # relative to briefcase frame
+            xyz: [0.14, 0.0, 0.02]
+            rpy: [0, 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'battery'
+          color: 'red'
+          assembled_pose: # relative to briefcase frame
+            xyz: [-0.15, 0.035, 0.043]
+            rpy: [0, 0, 'pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'sensor'
+          color: 'red'
+          assembled_pose: # relative to briefcase frame
+            xyz: [-0.1, 0.395, 0.045]
+            rpy: [0, 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
+        - type: 'regulator'
+          color: 'red'
+          assembled_pose: # relative to briefcase frame
+            xyz: [0.175, -0.223, 0.215]
+            rpy: ['pi/2', 0, '-pi/2']
+          assembly_direction: [0.0, 0.0, 0.0]
