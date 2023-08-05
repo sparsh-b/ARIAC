@@ -68,11 +68,24 @@ Trial runs are logged to files located in :file:`~/.ariac2023/log/gazebo` and :f
 Playing Back Gazebo State
 -------------------------
 
-To play back a specific :file:`state.log`, you will need to start  :file:`ariac_playback.launch.py` which is located in the folder :file:`ariac_plugins`, so make sure you have ARIAC installed and sourced.
+To play back a specific :file:`state.log`, you will need to start  :file:`ariac_playback.launch.py` which is located in the folder :file:`ariac_plugins`, so make sure you have ARIAC installed and sourced. Play back the trial run with the following command: 
 
-:file:`ariac_playback.launch.py` will try to look for robot meshes and textures on the host machine the same way the robot model is fetched in the docker container, that is, in :file:`/home/ubuntu/ariac_ws/`. Since this path does not exist on the host, the launch file will crash. To solve this issue you can either create the path :file:`/home/ubuntu/ariac_ws/` on the host machine or you can create a symbolic link to the path where the robot meshes and textures are located on the host machine. **Use one of the following methods**:
 
-    - Creating the folder :file:`/home/ubuntu/ariac_ws/` on the host machine. If ARIAC is installed in :file:`/home/john/my_ws/` on the host machine:
+.. code-block:: console
+    :caption: Starting ariac_playback.launch.py
+
+    ros2 launch ariac_plugins ariac_playback.launch.py trial_name:=<trial_name>
+
+where :code:`<trial_name>` is the name of the trial file without the :file:`.yaml` extension. The launch file will look for the :file:`state.log` file in :file:`~/.ariac2023/log/gazebo/<trial_name>/state.log` and play it back. The playback can be paused and resumed by pressing the space bar.
+
+Gazebo State Generated in a Docker Container
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To play back Gazebo state with :file:`state.log` generated in a docker container, it is recommended to copy :file:`state.log` on the host machine. Make sure the folder :file:`~/.ariac2023/log/gazebo/<trial_name>/` exists on the host machine and then copy :file:`state.log` in this folder.
+
+:file:`ariac_playback.launch.py` will try to look for robot meshes and textures on the host machine the same way the robot model is fetched in the docker container, that is, in :file:`/home/ubuntu/ariac_ws/`. Since this path does not exist on the host, you will not be successful at replaying the log file on the host. To solve this issue you can use one of the following methods:
+
+    - Copying files in the folder :file:`/home/ubuntu/ariac_ws/` on the host machine. If ARIAC is installed in :file:`/home/john/my_ws/` on the host machine:
 
         .. code-block:: console
 
@@ -86,11 +99,9 @@ To play back a specific :file:`state.log`, you will need to start  :file:`ariac_
             sudo mkdir -p /home/ubuntu
             ln -s /home/john/my_ws /home/ubuntu/ariac_ws
 
-Once you have created the folder :file:`/home/ubuntu/ariac_ws/` or a symbolic link to it, you can start :file:`ariac_playback.launch.py` with the following command:
+Once you have created the folder :file:`/home/ubuntu/ariac_ws/` or a symbolic link to it, you can start :file:`ariac_playback.launch.py` the same way as before:
 
 .. code-block:: console
     :caption: Starting ariac_playback.launch.py
 
     ros2 launch ariac_plugins ariac_playback.launch.py trial_name:=<trial_name>
-
-where :code:`<trial_name>` is the name of the trial file without the `.yaml` extension. The launch file will look for the :file:`state.log` file in :file:`~/.ariac2023/log/gazebo/<trial_name>/state.log` and play it back. The playback can be paused and resumed by pressing the space bar.
